@@ -1,0 +1,30 @@
+[
+    {
+        "model": "core.Test",
+        "pk": 1,
+        "fields": {
+            "test": "test"
+        }
+    },
+    {
+        "model": "core.Test",
+        "pk": 2,
+        "fields": {
+            "test": "test"
+        }
+    },
+    {
+        "model": "core.Test",
+        "pk": 3,
+        "fields": {
+            "test": "test"
+        }
+    },
+    {
+        "model": "core.Test",
+        "pk": 4,
+        "fields": {
+            "test": "test"
+        }
+    }  
+]
