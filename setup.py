@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-ttdb',
-    version='0.1',
+    version='0.2',
     description='Creates a django test database using a postgres template database.',
     author='William Buick',
     author_email='william.buick@encode.net.nz',
@@ -23,6 +23,9 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
     ],
 )
