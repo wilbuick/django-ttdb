@@ -74,7 +74,6 @@ most likely want to define a different set of DATABASES for testing than develop
                 'NAME': 'django_ttdb',
                 'USER': 'postgres',
                 'HOST': '127.0.0.1',
-                'TEST_TEMPLATE': True,
             }
         }
 
@@ -85,21 +84,21 @@ most likely want to define a different set of DATABASES for testing than develop
     file for running tests.
 
 Now we can use the template test database in our tests. There are a few ways to do this but 
-the easiest way is using a decorator::
+the easiest way is using a decorator.::
 
     from ttdb import use_template_database
     from django.test import TestCase
-
-    class TestDecorator(TestCase):
-        @use_template_database('development')
-        def test_decorator(self):
-            """Is running tests using the postgres template database."""
-            pass
 
     @use_template_database('development')
     class TestClassDecorator(TestCase):
         def test_class_decorator(pass):
             """All tests inside class will use postgres template database."""
+            pass
+
+    class TestDecorator(TestCase):
+        @use_template_database('development')
+        def test_decorator(self):
+            """Is running tests using the postgres template database."""
             pass
 
 We can also use the *TemplateDBTestCase* class::
