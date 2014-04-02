@@ -14,15 +14,6 @@ be very slow. This problem is solved by loading the test data during database cr
 at the database level and allows us to avoid all of the overhead by loading data through
 django.
 
-Best practice
--------------
-
-If your test data is large enough to make use of django-ttdb then I recommend using a 
-minimum of two databases for testing. First use a sqlite database for all simple unit 
-tests that do not require special database features (postgres). Using a sqlite db for 
-testing in django runs in memory and is fast. Second define a postgres test database 
-for integration tests which need a specific set of data to test against.
-
 How it works
 ------------
 
