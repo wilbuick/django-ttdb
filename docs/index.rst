@@ -59,7 +59,7 @@ most likely want to define a different set of DATABASES for testing than develop
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
             },
-            'development': {
+            'integration': {
                 'ENGINE': 'django.db.backends.postgresql_psycopg2',
                 'NAME': 'django_ttdb',
                 'USER': 'postgres',
@@ -89,14 +89,14 @@ the easiest way is using a decorator::
     from ttdb import use_template_database
     from django.test import TestCase
 
-    @use_template_database('development')
+    @use_template_database('integration')
     class TestClassDecorator(TestCase):
         def test_class_decorator(pass):
             """All tests inside class will use postgres template database."""
             pass
 
     class TestDecorator(TestCase):
-        @use_template_database('development')
+        @use_template_database('integration')
         def test_decorator(self):
             """Is running tests using the postgres template database."""
             pass
@@ -106,7 +106,7 @@ We can also use the *TemplateDBTestCase* class::
     from ttdb import TemplateDBTestCase
 
     class TestClass(TemplateDBTestCase):
-        template_database = 'development'
+        template_database = 'integration'
 
         def test_class(self):
             """Define the template_database and use inheritance rather than decorator."""
@@ -128,7 +128,7 @@ django-ttdb takes a different approach. It drops the database and creates it aft
     from ttdb import use_template_database
     from django.test import TransactionTestCase
 
-    @use_template_database('development')
+    @use_template_database('integration')
     class TestTransactions(TransactionTestCase):
         def test_transaction(self):
             """After running the template test db will be droped and created."""
@@ -146,14 +146,14 @@ after each test::
     from ttdb import use_template_database
     from django.test import TransactionTestCase
 
-    @use_template_database('development', reload_after_test=False)
+    @use_template_database('integration', reload_after_test=False)
     class TestTransactions(TransactionTestCase):
         def test_transaction(self):
             """Database will remain upon test completion."""
             pass
 
     class TestTransactionTwo(TemplateDBTransactionTestCase):
-        template_database = 'development'
+        template_database = 'integration'
         reload_after_test = False
 
         def test_transaction(self):
@@ -171,7 +171,7 @@ of the test class::
     from ttdb import use_template_database
     from ttdb import TemplateDBLiveServerTestCase
 
-    @use_template_database('development')
+    @use_template_database('integration')
     class TestLiveServer(LiveServerTestCase):
         def test_one(self):
             """Database not destroyed after."""
@@ -182,7 +182,7 @@ of the test class::
             pass
 
     class TestLiveServer(TemplateDBLiveServerTestCase):
-        template_database = 'development'
+        template_database = 'integration'
 
         def test_one(self):
             """Database not destroyed after."""
@@ -199,8 +199,8 @@ Finally, the ``use_template_database`` decorator also works with the with statem
     class Test(TestCase):
         def test_with(self):
             """Test as with statement."""
-            with use_template_database('development', reload_after_test=False):
-                # Test against development database
+            with use_template_database('integration', reload_after_test=False):
+                # Test against integration database
                 pass
             # Test against default sqlite database
 
@@ -225,6 +225,7 @@ Integration with South
 ----------------------
 
 Make sure you turn off ``SOUTH_TESTS_MIGRATE``. It's not needed because you're creating 
-your test database as a copy of your development (or other) database::
+your test database as a copy of another database that already contains all of the tables,
+views, functions and data that you need.::
 
     SOUTH_TESTS_MIGRATE = False
