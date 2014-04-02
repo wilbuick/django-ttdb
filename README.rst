@@ -38,3 +38,4 @@ Documentation
 Documentation can be found on `readthedocs.org` at `Documentation`_.
 
 .. _`Documentation`: http://django-ttdb.readthedocs.org/en/latest/
+.. _`readthedocs.org`: http://readthedocs.org
