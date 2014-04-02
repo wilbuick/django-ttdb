@@ -5,3 +5,4 @@ test.db
 .tox
 *.egg-info
 docs/_build/
+dist/
