@@ -35,7 +35,7 @@ To make this work we need three parts:
 Documentation
 -------------
 
-Documentation can be found on `readthedocs.org` at `Documentation`_.
+Documentation can be found on `readthedocs.org`_ at `Documentation`_.
 
 .. _`Documentation`: http://django-ttdb.readthedocs.org/en/latest/
 .. _`readthedocs.org`: http://readthedocs.org
