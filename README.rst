@@ -2,6 +2,10 @@
 Django Template Test Database
 =============================
 
+.. image:: https://secure.travis-ci.org/wilbuick/django-ttdb.png
+    :alt: Build Status
+    :target: http://travis-ci.org/wilbuick/django-ttdb
+
 Django template test database is a testing tool for django that provides an alternative
 to fixtures when tools like FactoryBoy aren't suitable. The use case is simple: for 
 integration tests that require the test database to be populated with a specific (large) 
