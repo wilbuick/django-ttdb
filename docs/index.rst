@@ -48,7 +48,7 @@ Usage
 -----
 
 Then you have to define a postgres template database for testing in your settings file. You'll 
-most likely want to define a different set of DATABASES for testing than development/production.::
+most likely want to define a different set of DATABASES for testing than development/production::
 
     # If running the tests use two databases. The default is an in memory sqlite database
     # for running unit tests (speed). A second test database created called test_django_ttdb 
@@ -84,7 +84,7 @@ most likely want to define a different set of DATABASES for testing than develop
     file for running tests.
 
 Now we can use the template test database in our tests. There are a few ways to do this but 
-the easiest way is using a decorator.::
+the easiest way is using a decorator::
 
     from ttdb import use_template_database
     from django.test import TestCase
@@ -165,7 +165,7 @@ the database before the thread starts. To do this the database is patched  in th
 setUpClass method and remains patched until all of the tests in the LiveServerTestCase
 have run. That means that unlike the TestCase and TransactionTestCase the template db 
 will not be droped and created after each test, rather at the creation and destruction 
-of the test class.::
+of the test class::
 
     from django.test import LiveServerTestCase 
     from ttdb import use_template_database
@@ -208,7 +208,7 @@ Integration with other test runners
 -----------------------------------
 
 django-ttdb should play nice with other test runners. One way to integrate it is by 
-creating a test runner that subclasses other test runners.::
+creating a test runner that subclasses other test runners::
 
     from ttdb.runner import TemplateDatabaseRunner
     from discover_runner import DiscoverRunner
@@ -225,14 +225,6 @@ Integration with South
 ----------------------
 
 Make sure you turn off ``SOUTH_TESTS_MIGRATE``. It's not needed because you're creating 
-your test database as a copy of your development (or other) database.::
+your test database as a copy of your development (or other) database::
 
     SOUTH_TESTS_MIGRATE = False
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
