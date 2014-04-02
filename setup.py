@@ -9,7 +9,8 @@ setup(
     author_email='william.buick@encode.net.nz',
     long_description=open('README.rst', 'r').read(),
     url='http://github.com/wilbuick/django-ttdb',
-    packages=find_packages(),
+    license='BSD',
+    packages=find_packages(exclude=('tests',)),
     install_requires=[
         'django>=1.4.2, < 1.7',
         'mock',
