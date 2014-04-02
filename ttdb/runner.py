@@ -2,13 +2,13 @@
 
 import functools
 
+from django import VERSION as DJANGO_VERSION
+from django.test import TransactionTestCase
+
 try:
     from django.test.runner import DiscoverRunner as Runner
 except ImportError:
     from django.test.simple import DjangoTestSuiteRunner as Runner
-
-from django import VERSION as DJANGO_VERSION
-from django.test import TransactionTestCase
 
 
 def sql_table_creation_suffix(self):

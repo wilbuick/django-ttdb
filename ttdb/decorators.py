@@ -1,18 +1,18 @@
 """Decorator to change the database the tests are run with."""
 
-import functools
-
 from django.test import LiveServerTestCase
 from django.test import TestCase
 from django.test import TransactionTestCase
-
-from ttdb.testcases import TemplateDBMixin
+import functools
 from ttdb.testcases import TemplateDBTestCase 
 from ttdb.testcases import TemplateDBLiveServerTestCase
 from ttdb.testcases import TemplateDBTransactionTestCase
+from ttdb.utils import reload_template_database
+from ttdb.utils import restore_default_database
+from ttdb.utils import enable_template_database  
 
 
-class use_template_database(TemplateDBMixin):
+class use_template_database(object):
 
     """Decorator that switches the test database to another."""
 
@@ -23,12 +23,13 @@ class use_template_database(TemplateDBMixin):
 
     def __enter__(self):
         """For using in with statement."""
-        self._use_template_database()
+        self._templatedb_patches = enable_template_database(self.template_database)
 
     def __exit__(self, exc_type, exc_value, traceback):
         """For using in with statement."""
-        self._restore_default_database()
-        self._reload_template_database()
+        restore_default_database(*self._templatedb_patches)
+        if self.reload_after_test is True:
+            reload_template_database(self.template_database)
 
     def __call__(self, test_func):
         """Switch the test database to the one specified.
