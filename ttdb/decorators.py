@@ -2,9 +2,9 @@
 
 import functools
 
+from django.test import LiveServerTestCase
 from django.test import TestCase
 from django.test import TransactionTestCase
-from django.test import LiveServerTestCase
 
 from ttdb.testcases import TemplateDBMixin
 from ttdb.testcases import TemplateDBTestCase 
@@ -25,7 +25,7 @@ class use_template_database(TemplateDBMixin):
         """For using in with statement."""
         self._use_template_database()
 
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_value, traceback):
         """For using in with statement."""
         self._restore_default_database()
         self._reload_template_database()

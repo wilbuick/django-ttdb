@@ -1,26 +1,40 @@
 # Django settings for django-selenium-testapp project.
 import os
+import sys
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# Use an in memory test database as default because this is faster. A second 
-# test database is created using the django_ttdb database as a template.
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-    },
-    'development': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_ttdb',
-        'USER': 'django_ttdb',
-        'PASSWORD': 'Lahbai8a',
-        'HOST': '127.0.0.1',
-        'TEST_TEMPLATE': True,
+if 'test' in sys.argv:
+    # Use an in memory test database as default because this is faster. A second 
+    # test database is created using the django_ttdb database as a template.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+        },
+        'development': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django_ttdb',
+            'USER': 'django_ttdb',
+            'PASSWORD': 'Lahbai8a',
+            'HOST': '127.0.0.1',
+            'TEST_TEMPLATE': True,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django_ttdb',
+            'USER': 'django_ttdb',
+            'PASSWORD': 'Lahbai8a',
+            'HOST': '127.0.0.1',
+            'TEST_TEMPLATE': True,
+        }
+    }
 
 # Use the ttdb test runner
 TEST_RUNNER = 'ttdb.runner.TemplateDatabaseRunner'
@@ -101,5 +115,5 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'core',
+    'tests',
 )

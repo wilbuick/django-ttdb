@@ -70,20 +70,15 @@ class TemplateDBTransactionTestCase(TemplateDBMixin, TransactionTestCase):
     def _pre_setup(self):
         """Switch to the template database before each test case."""
         self._use_template_database()
-        super(TemplateDBTransactionTestCase, self)._pre_setup()
+        with mock.patch('django.core.management.commands.flush.Command'):
+            super(TemplateDBTransactionTestCase, self)._pre_setup()
 
     def _post_teardown(self):
         """Restore the default database after each test case."""
-        super(TemplateDBTransactionTestCase, self)._post_teardown()
+        with mock.patch('django.core.management.commands.flush.Command'):
+            super(TemplateDBTransactionTestCase, self)._post_teardown()
         self._restore_default_database()
         self._reload_template_database()
-
-    def _fixture_setup(self):
-        """Custom _fixture_setup to skip flushing the database."""
-        if hasattr(self, 'fixtures'):
-            call_command(
-                'loaddata', *self.fixtures,
-                **{'verbosity': 0, 'database': self.template_database})
 
 
 class TemplateDBLiveServerTestCase(TemplateDBMixin, LiveServerTestCase):
@@ -107,9 +102,12 @@ class TemplateDBLiveServerTestCase(TemplateDBMixin, LiveServerTestCase):
         cls._restore_default_database()
         cls._reload_template_database()
 
-    def _fixture_setup(self):
-        """Custom _fixture_setup to skip flushing the database."""
-        if hasattr(self, 'fixtures'):
-            call_command(
-                'loaddata', *self.fixtures,
-                **{'verbosity': 0, 'database': self.template_database})
+    def _pre_setup(self):
+        """Switch to the template database before each test case."""
+        with mock.patch('django.core.management.commands.flush.Command'):
+            super(TemplateDBLiveServerTestCase, self)._pre_setup()
+
+    def _post_teardown(self):
+        """Restore the default database after each test case."""
+        with mock.patch('django.core.management.commands.flush.Command'):
+            super(TemplateDBLiveServerTestCase, self)._post_teardown()

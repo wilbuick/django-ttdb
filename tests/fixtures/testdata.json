@@ -1,27 +1,27 @@
 [
     {
-        "model": "core.Test",
+        "model": "tests.test",
         "pk": 1,
         "fields": {
             "test": "test"
         }
     },
     {
-        "model": "core.Test",
+        "model": "tests.test",
         "pk": 2,
         "fields": {
             "test": "test"
         }
     },
     {
-        "model": "core.Test",
+        "model": "tests.test",
         "pk": 3,
         "fields": {
             "test": "test"
         }
     },
     {
-        "model": "core.Test",
+        "model": "tests.test",
         "pk": 4,
         "fields": {
             "test": "test"

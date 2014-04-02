@@ -1,0 +1,6 @@
+test.db
+*.swp
+*.swo
+*.pyc
+.tox
+*.egg-info

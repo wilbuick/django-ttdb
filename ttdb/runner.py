@@ -7,6 +7,7 @@ try:
 except ImportError:
     from django.test.simple import DjangoTestSuiteRunner as Runner
 
+from django import VERSION as DJANGO_VERSION
 from django.test import TransactionTestCase
 
 
@@ -32,8 +33,9 @@ def create_test_db(self, verbosity=1, autoclobber=False):
     self.connection.close()
     self.connection.settings_dict["NAME"] = test_database_name
 
-    # Confirm the feature set of the test database
-    self.connection.features.confirm()
+    if DJANGO_VERSION[0] == 1 and DJANGO_VERSION[1] == 4: 
+        # Confirm the feature set of the test database
+        self.connection.features.confirm()
 
     self.connection.cursor()
 

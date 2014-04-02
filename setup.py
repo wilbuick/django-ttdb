@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-ttdb',
-    version='0.1-dev',
-    description='Creates a django test database using a postgresql template db.',
+    version='0.1',
+    description='Creates a django test database using a postgres template database.',
     author='William Buick',
     author_email='william.buick@encode.net.nz',
     long_description=open('README.rst', 'r').read(),
