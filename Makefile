@@ -1,6 +1,6 @@
 .PHONY: test
 
-DJANGO_SETTINGS_MODULE := tests.settings
+DJANGO_SETTINGS_MODULE ?= tests.settings
 
 test:
 	DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) django-admin.py syncdb --noinput

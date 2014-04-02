@@ -8,8 +8,7 @@ TEMPLATE_DEBUG = DEBUG
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# The postgres database is configured to work with travis-ci. Do not change the
-# username!
+# The postgres database is configured to work with travis-ci. Do not change the username!
 if 'test' in sys.argv:
     # Use an in memory test database as default because this is faster. A second 
     # test database is created using the django_ttdb database as a template.
@@ -32,7 +31,6 @@ else:
             'NAME': 'django_ttdb',
             'USER': 'postgres',
             'HOST': '127.0.0.1',
-            'TEST_TEMPLATE': True,
         }
     }
 

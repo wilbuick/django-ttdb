@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 import mock
+import threading
 import unittest
 
 from django.test import TestCase
@@ -159,3 +160,14 @@ class TestLiveServerTestCaseDecorator(LiveServerTestCase):
 
         # Check that the database name is pointing to the test database.
         self.assertEqual(connections['default'].settings_dict['NAME'], 'test_django_ttdb')
+
+    def test_correct_db_thread(self):
+        """Test the correct db inside a thread."""
+        def test_thread(cls):
+            cls.test_correct_db()
+            from django.db import connections
+            connections['default'].close()
+
+        t = threading.Thread(target=test_thread, args=(self,))
+        t.start()
+        t.join()
