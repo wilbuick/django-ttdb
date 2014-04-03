@@ -135,6 +135,8 @@ django-ttdb takes a different approach. It drops the database and creates it aft
             pass
 
     class TestTransactionTwo(TemplateDBTransactionTestCase):
+        template_database = 'integration'
+
         def test_transaction(self):
             pass
 
