@@ -91,7 +91,7 @@ the easiest way is using a decorator::
 
     @use_template_database('integration')
     class TestClassDecorator(TestCase):
-        def test_class_decorator(pass):
+        def test_class_decorator(self):
             """All tests inside class will use postgres template database."""
             pass
 
@@ -135,6 +135,8 @@ django-ttdb takes a different approach. It drops the database and creates it aft
             pass
 
     class TestTransactionTwo(TemplateDBTransactionTestCase):
+        template_database = 'integration'
+
         def test_transaction(self):
             pass
 
