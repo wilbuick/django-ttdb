@@ -19,8 +19,7 @@ if 'test' in sys.argv:
         'development': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'django_ttdb',
-            'USER': 'django_ttdb',
-            'PASSWORD': 'django_ttdb',
+            'USER': 'postgres',
             'HOST': '127.0.0.1',
         }
     }
@@ -29,8 +28,7 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'django_ttdb',
-            'USER': 'django_ttdb',
-            'PASSWORD': 'django_ttdb',
+            'USER': 'postgres',
             'HOST': '127.0.0.1',
         }
     }

@@ -12,3 +12,4 @@ lib/
 local/
 pip-selfcheck.json
 share/
+tests/local_settings.py
