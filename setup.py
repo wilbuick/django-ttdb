@@ -12,7 +12,7 @@ setup(
     license='BSD',
     packages=find_packages(exclude=('tests',)),
     install_requires=[
-        'django>=1.4.2, < 1.7',
+        'django>=1.8',
         'mock',
     ],
     classifiers=[

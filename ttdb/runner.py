@@ -1,14 +1,12 @@
 """Test runner that creates a database using a postgresql template db."""
 
 import functools
+import mock
 
-from django import VERSION as DJANGO_VERSION
+from django.conf import settings
+from django.core.management.commands import migrate
 from django.test import TransactionTestCase
-
-try:
-    from django.test.runner import DiscoverRunner as Runner
-except ImportError:
-    from django.test.simple import DjangoTestSuiteRunner as Runner
+from django.test.runner import DiscoverRunner as Runner
 
 
 def sql_table_creation_suffix(self):
@@ -16,30 +14,13 @@ def sql_table_creation_suffix(self):
     return 'WITH TEMPLATE %s' % self.connection.settings_dict['ORIGINAL_NAME']
 
 
-def create_test_db(self, verbosity=1, autoclobber=False):
+def create_test_db(self, *args, **kwargs):
     """Disable syncdb on test creation because database already contains data."""
-    test_database_name = self._get_test_db_name()
-
-    if verbosity >= 1:
-        test_db_repr = ''
-        if verbosity >= 2:
-            test_db_repr = " ('%s')" % test_database_name
-        print("Creating test database for alias '%s'%s..." % (
-            self.connection.alias, test_db_repr))
-
-    self.connection.settings_dict['ORIGINAL_NAME'] = self.connection.settings_dict['NAME']
-    self._create_test_db(verbosity, autoclobber)
-
-    self.connection.close()
-    self.connection.settings_dict["NAME"] = test_database_name
-
-    if DJANGO_VERSION[0] == 1 and DJANGO_VERSION[1] == 4: 
-        # Confirm the feature set of the test database
-        self.connection.features.confirm()
-
-    self.connection.cursor()
-
-    return test_database_name
+    if self.connection.alias in settings.TTDB:
+        with mock.patch.object(migrate, 'Command'):
+            self._old_create_test_db(*args, **kwargs)
+    else:
+        self._old_create_test_db(*args, **kwargs)
 
 
 class TemplateDatabaseRunner(Runner):
@@ -62,11 +43,13 @@ class TemplateDatabaseRunner(Runner):
 
         for alias in connections:
             connection = connections[alias]
-            if connection.settings_dict.get('TEST_TEMPLATE', False) is True:
+            if connection.alias in settings.TTDB:
+                connection.settings_dict['ORIGINAL_NAME'] = connection.settings_dict['NAME']
 
                 connection.creation.sql_table_creation_suffix = functools.partial(
                     sql_table_creation_suffix, connection.creation)
 
+                connection.creation._old_create_test_db = connection.creation.create_test_db
                 connection.creation.create_test_db = functools.partial(
                     create_test_db, connection.creation)
 

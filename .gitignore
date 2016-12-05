@@ -6,4 +6,9 @@ test.db
 *.egg-info
 docs/_build/
 dist/
-tests/local_settings.py
+bin/
+include/
+lib/
+local/
+pip-selfcheck.json
+share/

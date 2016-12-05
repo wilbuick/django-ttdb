@@ -74,8 +74,8 @@ class TestReloadTemplateDatabase(TestCase):
 
     """Test reloading template test database."""
 
-    @mock.patch('django.db.backends.creation.BaseDatabaseCreation._destroy_test_db')
-    @mock.patch('django.db.backends.creation.BaseDatabaseCreation._create_test_db')
+    @mock.patch('django.db.backends.base.creation.BaseDatabaseCreation._destroy_test_db')
+    @mock.patch('django.db.backends.base.creation.BaseDatabaseCreation._create_test_db')
     def test_reload_database(self, _destroy_test_db, _create_test_db):
         """Test reload of test database."""
         with use_template_database('development'):
@@ -83,8 +83,8 @@ class TestReloadTemplateDatabase(TestCase):
         self.assertEqual(_destroy_test_db.call_count, 1)
         self.assertEqual(_create_test_db.call_count, 1)
 
-    @mock.patch('django.db.backends.creation.BaseDatabaseCreation._destroy_test_db')
-    @mock.patch('django.db.backends.creation.BaseDatabaseCreation._create_test_db')
+    @mock.patch('django.db.backends.base.creation.BaseDatabaseCreation._destroy_test_db')
+    @mock.patch('django.db.backends.base.creation.BaseDatabaseCreation._create_test_db')
     def test_reload_database(self, _destroy_test_db, _create_test_db):
         """Test skip reload of test database."""
         with use_template_database('development', reload_after_test=False):

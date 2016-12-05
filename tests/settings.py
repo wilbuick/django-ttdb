@@ -19,9 +19,9 @@ if 'test' in sys.argv:
         'development': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'django_ttdb',
-            'USER': 'postgres',
+            'USER': 'django_ttdb',
+            'PASSWORD': 'django_ttdb',
             'HOST': '127.0.0.1',
-            'TEST_TEMPLATE': True,
         }
     }
 else:
@@ -29,13 +29,18 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'django_ttdb',
-            'USER': 'postgres',
+            'USER': 'django_ttdb',
+            'PASSWORD': 'django_ttdb',
             'HOST': '127.0.0.1',
         }
     }
 
 # Use the ttdb test runner
 TEST_RUNNER = 'ttdb.runner.TemplateDatabaseRunner'
+
+TTDB = (
+    'development',
+)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -93,8 +98,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
-
-ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 TEMPLATE_CONTEXT_PROCESSORS = (
