@@ -27,7 +27,7 @@ for integration tests which need a specific set of data to test against.
 Dependencies
 ------------
 
-* Django 1.4 and above
+* Django 1.8 and above
 * mock
 * postgresql
 * psycopg2
@@ -47,41 +47,21 @@ you can tell it to use the django-ttdb runner.::
 Usage
 -----
 
-Then you have to define a postgres template database for testing in your settings file. You'll 
-most likely want to define a different set of DATABASES for testing than development/production::
+Then you have to define a which postgres databases you want to enable ttdb for. You do this 
+by defining the TTDB setting as shown below::
 
-    # If running the tests use two databases. The default is an in memory sqlite database
-    # for running unit tests (speed). A second test database created called test_django_ttdb 
-    # is created as an exact copy of the django_ttdb db. This database is not used unless 
-    # You explicitly tell the TestCase to use this database.
-    if 'test' in sys.argv:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-            },
-            'integration': {
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                'NAME': 'django_ttdb',
-                'USER': 'postgres',
-                'HOST': '127.0.0.1',
-                'TEST_TEMPLATE': True,
-            }
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django_ttdb',
+            'USER': 'postgres',
+            'HOST': '127.0.0.1',
         }
-    else:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                'NAME': 'django_ttdb',
-                'USER': 'postgres',
-                'HOST': '127.0.0.1',
-            }
-        }
+    }
 
-.. note::
-
-    The above example uses a simple check if *test* is in the argv to change the database
-    configuration for running tests. It is recommended that you create a seperate settings
-    file for running tests.
+    TTDB = (
+        'default',
+    )
 
 Now we can use the template test database in our tests. There are a few ways to do this but 
 the easiest way is using a decorator::
@@ -213,21 +193,11 @@ django-ttdb should play nice with other test runners. One way to integrate it is
 creating a test runner that subclasses other test runners::
 
     from ttdb.runner import TemplateDatabaseRunner
-    from discover_runner import DiscoverRunner
     from other_runner import OtherRunner
 
-    class MyTestRunner(DiscoverRunner, OtherRunner, TemplateDatabaseRunner):
+    class MyTestRunner(OtherRunner, TemplateDatabaseRunner):
         option_list = OtherRunner.option_list + DiscoverRunner.option_list
 
 Then in your settings file::
 
     TEST_RUNNER = 'path.to.MyTestRunner'
-
-Integration with South
-----------------------
-
-Make sure you turn off ``SOUTH_TESTS_MIGRATE``. It's not needed because you're creating 
-your test database as a copy of another database that already contains all of the tables,
-views, functions and data that you need.::
-
-    SOUTH_TESTS_MIGRATE = False
