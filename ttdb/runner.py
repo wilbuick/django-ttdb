@@ -4,7 +4,6 @@ import functools
 import mock
 
 from django.conf import settings
-from django.core.management.commands import migrate
 from django.test import TransactionTestCase
 from django.test.runner import DiscoverRunner as Runner
 
@@ -16,6 +15,8 @@ def sql_table_creation_suffix(self):
 
 def create_test_db(self, *args, **kwargs):
     """Disable syncdb on test creation because database already contains data."""
+    from django.core.management.commands import migrate
+
     if self.connection.alias in settings.TTDB:
         with mock.patch.object(migrate, 'Command'):
             self._old_create_test_db(*args, **kwargs)

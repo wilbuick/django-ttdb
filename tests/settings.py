@@ -116,3 +116,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tests',
 )
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass

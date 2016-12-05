@@ -4,7 +4,6 @@ addons:
 before_script:
   - psql -c 'create database django_ttdb;' -U postgres
 python:
-  - "2.6"
   - "2.7"
   - "3.2"
   - "3.3"
