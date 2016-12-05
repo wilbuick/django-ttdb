@@ -5,8 +5,7 @@ before_script:
   - psql -c 'create database django_ttdb;' -U postgres
 python:
   - "2.7"
-  - "3.2"
-  - "3.3"
+  - "3.4"
 env:
   - DJANGO_VERSION=1.8.17
   - DJANGO_VERSION=1.9.12
