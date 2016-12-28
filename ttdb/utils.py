@@ -30,7 +30,7 @@ def reload_template_database(db_name):
     connection.creation.destroy_test_db(
         connection.settings_dict['ORIGINAL_NAME'], 0)
     connection.settings_dict['NAME'] = connection.settings_dict['ORIGINAL_NAME']
-    connection.creation.create_test_db(verbosity=0)
+    connection.creation.create_test_db(verbosity=0, reload=True)
 
 
 def restore_default_database(connection_patch, settings_patch):

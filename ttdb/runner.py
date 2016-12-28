@@ -17,6 +17,18 @@ def create_test_db(self, *args, **kwargs):
     """Disable syncdb on test creation because database already contains data."""
     from django.core.management.commands import migrate
 
+    if kwargs.get('reload', False) is True:
+        if hasattr(self, 'create_test_db_kwargs'):
+            kwargs = self.create_test_db_kwargs
+        if hasattr(self, 'create_test_db_args'):
+            args = self.create_test_db_args       
+    else:
+        self.create_test_db_kwargs = kwargs
+        self.create_test_db_args = args
+
+    if 'reload' in kwargs:
+        del kwargs['reload']
+
     if self.connection.alias in settings.TTDB:
         with mock.patch.object(migrate, 'Command'):
             self._old_create_test_db(*args, **kwargs)
